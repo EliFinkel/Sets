@@ -127,13 +127,20 @@ public abstract class AbstractSet<E> implements ISet<E> {
      * @return true if other is a Set and has the same elements as this set
      */
     public boolean equals(Object other) {
+        if(this == other){
+            return true;
+        }
+
         if (!(other instanceof ISet<?>)) {
             return false;
         }
-
         ISet<?> otherSet = (ISet<?>) other;
 
+        if(this.size() != otherSet.size()){
+            return false;
+        }
         Iterator<?> otherIt = otherSet.iterator();
+        
         while (otherIt.hasNext()) {
             Object nextElement = otherIt.next();
             Iterator<E> setIt = iterator();
@@ -199,5 +206,21 @@ public abstract class AbstractSet<E> implements ISet<E> {
 
         result.append(")");
         return result.toString();
+    }
+
+    @Override
+    public ISet<E> intersection(ISet<E> otherSet){
+        ISet<E> intSet = otherSet;
+        otherSet.clear();
+
+        Iterator<E> otherIt = otherSet.iterator();
+        while(otherIt.hasNext()){
+            E element = otherIt.next();
+            if(this.contains(element)){
+                intSet.add(element);
+            }
+        }
+        return intSet;
+        
     }
 }

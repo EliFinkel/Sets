@@ -91,28 +91,23 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
     }
 
     public int binarySearch(ArrayList<E> data, E target) {
-        int result = -1;
         int left = 0;
-        int right = data.size()-1;
+        int right = data.size() - 1;
        
         while (left <= right) {
             int middle = left + (right - left) / 2;
             int compareResult = target.compareTo(data.get(middle));
-
+    
             if (compareResult == 0) {
-                return middle;
+                return middle; // Target found
             } else if (compareResult < 0) {
-                left = middle + 1;
-            } else if (compareResult > 0) {
-                right = middle - 1;
+                right = middle - 1; // Move left for the next middle calculation
+            } else {
+                left = middle + 1; // Move right for the next middle calculation
             }
         }
         
-        if(result == -1){
-            
-        }
-
-        return result;
+        return left; // Suitable insertion point if target is not found
     }
 
     @Override
@@ -124,13 +119,13 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
 
         int insertionPoint = binarySearch(myCon, item);
 
-        if (insertionPoint < 0) {
-            insertionPoint++;
-            insertionPoint *= -1;
+        boolean isDuplicate = (insertionPoint < myCon.size() && item.equals(myCon.get(insertionPoint)));
+
+        if (!isDuplicate) {
             myCon.add(insertionPoint, item);
             return true;
         }
-        return false;
+        return true;
     }
 
    
@@ -145,20 +140,8 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
                 diffSet.add(element);
             }
         }
+   
         return diffSet;
-    }
-
-    @Override
-    public ISet<E> intersection(ISet<E> otherSet) {
-        ISet<E> intSet = new SortedSet<>();
-        Iterator<E> it = iterator();
-        while (it.hasNext()) {
-            E element = it.next();
-            if (otherSet.contains(element)) {
-                intSet.add(element);
-            }
-        }
-        return intSet;
     }
 
     @Override

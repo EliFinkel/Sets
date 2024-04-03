@@ -176,6 +176,7 @@
          Iterator<String> it1 = s1.iterator();
          Iterator<String> it2 = s2.iterator();
          boolean good = true;
+        //  !SHould also check it2?
          while (good && it1.hasNext()) {
              good = it1.next().equals(it2.next());
          }
