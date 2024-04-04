@@ -58,9 +58,15 @@ public abstract class AbstractSet<E> implements ISet<E> {
         }
         int prevSize = size();
         Iterator<E> it = otherSet.iterator();
+
+        // Iterate through other sert
         while (it.hasNext()) {
+
+            // Add all from otherSet
             add(it.next());
         }
+
+        // Return true if the size has been changed
         return prevSize != size();
     }
 
@@ -80,7 +86,9 @@ public abstract class AbstractSet<E> implements ISet<E> {
         }
 
         Iterator<E> setIt = iterator();
+        // Iterate through this set
         while (setIt.hasNext()) {
+            // If this set has an element equal to item return true
             if (setIt.next().equals(item)) {
                 return true;
             }
@@ -105,7 +113,10 @@ public abstract class AbstractSet<E> implements ISet<E> {
         }
 
         Iterator<E> otherIt = otherSet.iterator();
+
+        // Iterate through other set
         while (otherIt.hasNext()) {
+            // If this set doesent contain an element of totherSet return false
             if (!this.contains(otherIt.next())) {
                 return false;
             }
@@ -129,25 +140,28 @@ public abstract class AbstractSet<E> implements ISet<E> {
             return true;
         }
 
+        // Check if other implements ISet and cast if so
         if (!(other instanceof ISet<?>)) {
             return false;
         }
         ISet<?> otherSet = (ISet<?>) other;
-
+        // Check size is equal
         if (this.size() != otherSet.size()) {
             return false;
         }
         Iterator<?> otherIt = otherSet.iterator();
-
+        // Iterate through otheSet
         while (otherIt.hasNext()) {
             Object nextElement = otherIt.next();
             Iterator<E> setIt = iterator();
             boolean found = false;
+            // Check each element in otherSet and thisSet
             while (setIt.hasNext() && !found) {
                 if (setIt.next().equals(nextElement)) {
                     found = true;
                 }
             }
+            // If found = false return false otherwise return true
             if (!found) {
                 return false;
             }
@@ -171,7 +185,9 @@ public abstract class AbstractSet<E> implements ISet<E> {
         }
         int prevSize = size();
         Iterator<E> setIt = iterator();
+        // Iterate through this set
         while (setIt.hasNext()) {
+            // If the element equals item remove it
             if (setIt.next().equals(item)) {
                 setIt.remove();
             }
@@ -206,13 +222,18 @@ public abstract class AbstractSet<E> implements ISet<E> {
 
     @Override
     public ISet<E> intersection(ISet<E> otherSet) {
-
+        if (otherSet == null) {
+            throw new IllegalArgumentException("Illegal Argument: " +
+                    "otherSet cannot be null!");
+        }
+        // Start with the union of this and otherSet
         ISet<E> intSet = this.union(otherSet);
         Iterator<E> unionIt = intSet.iterator();
+
+        // Loop through unionSet
         while (unionIt.hasNext()) {
             E element = unionIt.next();
-            // If the element is not present in either this set or otherSet, it should be
-            // removed from intSet.
+            // Filter out elements that are not in both sets
             if (!this.contains(element) || !otherSet.contains(element)) {
                 unionIt.remove();
             }

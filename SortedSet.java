@@ -54,9 +54,12 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
             throw new IllegalArgumentException("Illegal Argument: " +
                     "other cannot be null");
         }
+        // Init myCon
         myCon = new ArrayList<>();
         Iterator<E> otherIt = other.iterator();
+        // Loop through other
         while (otherIt.hasNext()) {
+            // Add each element of other to this set
             E element = otherIt.next();
             this.add(element);
         }
@@ -75,6 +78,7 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
             throw new IllegalArgumentException("Illegal Argument: " +
                     "size is 0");
         }
+        // Return the first element in the sorted set
         return myCon.get(0);
     }
 
@@ -91,6 +95,7 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
             throw new IllegalArgumentException("Illegal Argument: " +
                     "size is 0");
         }
+        // Return the last element in the sorted set
         return myCon.get(size() - 1);
     }
 
@@ -107,19 +112,23 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
         int right = data.size() - 1;
 
         while (left <= right) {
+            // Find the middle index and compare our target to the middle value
             int middle = left + (right - left) / 2;
             int compareResult = target.compareTo(data.get(middle));
 
             if (compareResult == 0) {
-                return middle; // Target found
+                // Target found
+                return middle;
             } else if (compareResult < 0) {
-                right = middle - 1; // Move left for the next middle calculation
+                // Move left for the next middle calculation
+                right = middle - 1;
             } else {
-                left = middle + 1; // Move right for the next middle calculation
+                // Move right for the next middle calculation
+                left = middle + 1;
             }
         }
-
-        return left; // Suitable insertion point if target is not found
+        // Return the correct insertion point for targer
+        return left;
     }
 
     /**
@@ -139,11 +148,14 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
                     "item cannot be null");
         }
 
+        // Find the point to insert item
         int insertionPoint = binarySearch(myCon, item);
 
+        // Check that item does not eist in the set
         boolean isDuplicate = (insertionPoint < myCon.size() && item.equals(myCon.get(insertionPoint)));
 
         if (!isDuplicate) {
+            // Add item if not a duplicate to this set and return true
             myCon.add(insertionPoint, item);
             return true;
         }
@@ -178,8 +190,10 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
         }
         ISet<E> diffSet = new SortedSet<>();
         Iterator<E> it = iterator();
+        // Iterate through this set
         while (it.hasNext()) {
             E element = it.next();
+            // If this element is in this set but not in otherSet add it to diffSet
             if (!otherSet.contains(element)) {
                 diffSet.add(element);
             }
@@ -197,27 +211,8 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
     // O(1)
     @Override
     public Iterator<E> iterator() {
+        // Return an iterator of the internal ArrayList
         return myCon.iterator();
-    }
-
-    @Override
-    public ISet<E> intersection(ISet<E> otherSet) {
-
-        if (otherSet == null) {
-            throw new IllegalArgumentException("Illegal Argument: " +
-                    "otherSet cannot be null!");
-        }
-        ISet<E> intSet = new SortedSet<>();
-
-        Iterator<E> otherIt = otherSet.iterator();
-        while (otherIt.hasNext()) {
-            E element = otherIt.next();
-            if (this.contains(element)) {
-                intSet.add(element);
-            }
-        }
-        return intSet;
-
     }
 
     /**
@@ -229,6 +224,7 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
     // O(1)
     @Override
     public int size() {
+        // Return size of the interal ArrayList
         return myCon.size();
     }
 
@@ -242,6 +238,7 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
     // O(1)
     @Override
     public void clear() {
+        // Clear the internal ArrayList
         myCon.clear();
     }
 
@@ -265,9 +262,12 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
             throw new IllegalArgumentException("Illegal Argument: " +
                     "otherSet cannot be null");
         }
+        // Create a new sorted set that is a copy of thi set
         ISet<E> unionSet = new SortedSet<>(this);
         Iterator<E> otherIt = otherSet.iterator();
+        // Iterate through otherSt
         while (otherIt.hasNext()) {
+            // Add each element of other to the unionSet if not already present
             E element = otherIt.next();
             if (!this.contains(element)) {
                 unionSet.add(element);
