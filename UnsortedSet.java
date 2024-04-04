@@ -16,9 +16,9 @@
  *  email address:   
  */
 
- import java.util.Iterator;
- import java.util.ArrayList;
- 
+import java.util.Iterator;
+import java.util.ArrayList;
+
  /**
   * A simple implementation of an ISet. 
   * Elements are not in any particular order.
@@ -28,71 +28,79 @@
   * An ArrayList must be used as the internal storage container.
   *
   */
- public class UnsortedSet<E> extends AbstractSet<E> {
- 
-     private ArrayList<E> myCon; //internal storage container (underlying Data Structure)
- 
-     public UnsortedSet() {
-         myCon = new ArrayList<>();
-     }
- 
-     public UnsortedSet(ISet<E> otherSet) {
-         if (otherSet == null) {
-             throw new IllegalArgumentException("Other set must not be null.");
-         }
-         myCon = new ArrayList<>();
-         Iterator<E> it = this.iterator();
-         while (it.hasNext()) {
-             this.add(it.next());
-         }
-     }
- 
-     public boolean add(E item) {
-         if(!contains(item)) {
-             myCon.add(item);
-             return true;
-         } else {
-             return false;
-         }
-     }
- 
-     public void clear() {
-         myCon.clear();
-     }
- 
-     public boolean difference(E item) {
-         return true;
-     }
- 
-     public ISet<E> union(ISet<E> otherSet) {
-         ISet<E> result = new UnsortedSet<>(otherSet);
-         Iterator<E> it = this.iterator();
-         while(it.hasNext()) {
-             E element = it.next();
-             if(!otherSet.contains(element)) {
-                 result.add(element);
-             }
-         }
-         return result;
-     }
- 
-     public ISet<E> intersection(ISet<E> otherSet) {
-         ISet<E> result = new UnsortedSet<>();
-         Iterator<E> it = this.iterator();
-         while(it.hasNext()) {
-             E element = it.next();
-             if(otherSet.contains(element)) {
-                 result.add(element);
-             }
-         }
-         return result;
-     }
- 
-     public int size() {
-         return myCon.size();
-     }
- 
- 
- 
- }
- 
+public class UnsortedSet<E> extends AbstractSet<E> {
+
+    private ArrayList<E> myCon; //internal storage container (underlying Data Structure)
+
+    public UnsortedSet() {
+        myCon = new ArrayList<>();
+    }
+
+    public UnsortedSet(ISet<E> otherSet) {
+        if (otherSet == null) {
+            throw new IllegalArgumentException("Other set must not be null.");
+        }
+        myCon = new ArrayList<>();
+        Iterator<E> it = this.iterator();
+        while (it.hasNext()) {
+            this.add(it.next());
+        }
+    }
+
+    public boolean add(E item) {
+        if(!contains(item)) {
+            myCon.add(item);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public void clear() {
+        myCon.clear();
+    }
+
+    public boolean difference(E item) {
+        return true;
+    }
+
+    public ISet<E> union(ISet<E> otherSet) {
+        if (otherSet == null) {
+            throw new IllegalArgumentException("other set may not be null.");
+        }
+        ISet<E> result = new UnsortedSet<>(otherSet);
+        Iterator<E> it = this.iterator();
+        while(it.hasNext()) {
+            E element = it.next();
+            if(!otherSet.contains(element)) {
+                result.add(element);
+            }
+        }
+        return result;
+        //logic needs to be checked
+    }
+
+    public ISet<E> difference(ISet<E> otherSet) {
+        if (otherSet == null) {
+            throw new IllegalArgumentException("other set may not be null.");
+        }
+        ISet<E> result = new UnsortedSet<>();
+        Iterator<E> it = this.iterator();
+        while(it.hasNext()) {
+            E element = it.next();
+            if(!otherSet.contains(element)) {
+                result.add(element);
+            }
+        }
+        return result;
+    }
+
+    public int size() {
+        return myCon.size();
+    }
+
+    @Override
+    public Iterator<E> iterator() {
+        return myCon.iterator();
+    }
+}
