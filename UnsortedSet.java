@@ -20,17 +20,17 @@
  import java.util.ArrayList;
  
  /**
-  * A simple implementation of an ISet. 
+  * A simple implementation of an ISet.
   * Elements are not in any particular order.
-  * Students are to implement methods that 
+  * Students are to implement methods that
   * were not implemented in AbstractSet and override
-  * methods that can be done more efficiently. 
+  * methods that can be done more efficiently.
   * An ArrayList must be used as the internal storage container.
   *
   */
  public class UnsortedSet<E> extends AbstractSet<E> {
  
-     private ArrayList<E> myCon; //internal storage container (underlying Data Structure)
+     private ArrayList<E> myCon; // internal storage container (underlying Data Structure)
  
      public UnsortedSet() {
          myCon = new ArrayList<>();
@@ -48,7 +48,7 @@
      }
  
      public boolean add(E item) {
-         if(!contains(item)) {
+         if (!contains(item)) {
              myCon.add(item);
              return true;
          } else {
@@ -65,23 +65,30 @@
      }
  
      public ISet<E> union(ISet<E> otherSet) {
-         ISet<E> result = new UnsortedSet<>(otherSet);
-         Iterator<E> it = this.iterator();
-         while(it.hasNext()) {
+         if (otherSet == null) {
+             throw new IllegalArgumentException("other set may not be null.");
+         }
+         ISet<E> result = new UnsortedSet<>(this);
+         Iterator<E> it = otherSet.iterator();
+         while (it.hasNext()) {
              E element = it.next();
-             if(!otherSet.contains(element)) {
+             if (!this.contains(element)) {
                  result.add(element);
              }
          }
          return result;
+         // logic needs to be checked
      }
  
-     public ISet<E> intersection(ISet<E> otherSet) {
+     public ISet<E> difference(ISet<E> otherSet) {
+         if (otherSet == null) {
+             throw new IllegalArgumentException("other set may not be null.");
+         }
          ISet<E> result = new UnsortedSet<>();
          Iterator<E> it = this.iterator();
-         while(it.hasNext()) {
+         while (it.hasNext()) {
              E element = it.next();
-             if(otherSet.contains(element)) {
+             if (!otherSet.contains(element)) {
                  result.add(element);
              }
          }
@@ -91,18 +98,9 @@
      public int size() {
          return myCon.size();
      }
-
-    @Override
-    public ISet<E> difference(ISet<E> otherSet) {
-        return new UnsortedSet<>();
-    }
-
-    @Override
-    public Iterator<E> iterator() {
-        return myCon.iterator();
-    }
  
- 
- 
+     @Override
+     public Iterator<E> iterator() {
+         return myCon.iterator();
+     }
  }
- 

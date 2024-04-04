@@ -181,8 +181,6 @@ public abstract class AbstractSet<E> implements ISet<E> {
         return prevSize != size();
     }
 
-
-
     /**
      * Return a String version of this set.
      * Format is (e1, e2, ... en)
