@@ -91,6 +91,16 @@
      public int size() {
          return myCon.size();
      }
+
+    @Override
+    public ISet<E> difference(ISet<E> otherSet) {
+        return new UnsortedSet<>();
+    }
+
+    @Override
+    public Iterator<E> iterator() {
+        return myCon.iterator();
+    }
  
  
  

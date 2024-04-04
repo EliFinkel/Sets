@@ -177,7 +177,7 @@
          Iterator<String> it2 = s2.iterator();
          boolean good = true;
         //  !SHould also check it2?
-         while (good && it1.hasNext()) {
+         while (good && it1.hasNext() && it2.hasNext()) {
              good = it1.next().equals(it2.next());
          }
          showTestResults(good, true, 18, s1, s2, "iterator and add methods SortedSet."
