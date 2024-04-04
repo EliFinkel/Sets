@@ -30,7 +30,7 @@ import java.util.ArrayList;
   */
 public class UnsortedSet<E> extends AbstractSet<E> {
 
-    private ArrayList<E> myCon; //internal storage container (underlying Data Structure)
+    private ArrayList<E> myCon;
 
     public UnsortedSet() {
         myCon = new ArrayList<>();

@@ -59,7 +59,7 @@ public abstract class AbstractSet<E> implements ISet<E> {
         int prevSize = size();
         Iterator<E> it = otherSet.iterator();
 
-        // Iterate through other sert
+        // Iterate through other set
         while (it.hasNext()) {
 
             // Add all from otherSet

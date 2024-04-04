@@ -38,7 +38,7 @@ import javax.swing.UIManager;
         pg2.txt       273kb         46088              22735               11708        7186         0.042786292       -.02783371
         pg3.txt       44kb          7423               -38665              2488         -9220        0.018292208       -0.024494084
         pg4.txt       285kb         50573              43150               9919         7431         0.043246541       0.024954333
-*UnSorted Set
+* UnSorted Set
         Name          Size      Total Words       Increase from Prev      Unique     Inc prev     Actual time      Inc prev row
         pg1.txt       124kb         23353               -                  4522         -            0.094523792          -
         pg2.txt       273kb         46088              22735               11708        7186         0.393122666       .298598874
@@ -276,6 +276,10 @@ public class SetTester {
         actual = s1.equals(ss2);
         showTestResults(actual, false, 23, s1, null, "equals methods SortedSet - different types"
                 + "\nsecond set contains Integers: " + ss2);
+
+        // test 24
+        actual = s1.equals(null);
+        showTestResults(actual, false, 24, s1, null, "equals methods SortedSet - other Object is null");
 
                 // CS314 Students. Uncomment this section when ready to
                 // run your experiments
