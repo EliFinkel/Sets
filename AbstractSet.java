@@ -51,20 +51,18 @@ public abstract class AbstractSet<E> implements ISet<E> {
      * @return true if this set changed as a result of this operation,
      *         false otherwise.
      */
-    public  boolean addAll(ISet<E> otherSet){
-        if(otherSet == null){
-            throw new IllegalArgumentException("Illegal Argument: " + 
-                "otherSet cannot be null");
+    public boolean addAll(ISet<E> otherSet) {
+        if (otherSet == null) {
+            throw new IllegalArgumentException("Illegal Argument: " +
+                    "otherSet cannot be null");
         }
         int prevSize = size();
         Iterator<E> it = otherSet.iterator();
-        while(it.hasNext()){
+        while (it.hasNext()) {
             add(it.next());
         }
         return prevSize != size();
     }
-
-
 
     /**
      * Determine if item is in this set.
@@ -127,7 +125,7 @@ public abstract class AbstractSet<E> implements ISet<E> {
      * @return true if other is a Set and has the same elements as this set
      */
     public boolean equals(Object other) {
-        if(this == other){
+        if (this == other) {
             return true;
         }
 
@@ -136,7 +134,7 @@ public abstract class AbstractSet<E> implements ISet<E> {
         }
         ISet<?> otherSet = (ISet<?>) other;
 
-        if(this.size() != otherSet.size()){
+        if (this.size() != otherSet.size()) {
             return false;
         }
         Iterator<?> otherIt = otherSet.iterator();
@@ -207,16 +205,19 @@ public abstract class AbstractSet<E> implements ISet<E> {
     }
 
     @Override
-    public ISet<E> intersection(ISet<E> otherSet){
-        ISet<E> intSet = otherSet.union(otherSet);
-        Iterator<E> otherIt = otherSet.iterator();
-        while(otherIt.hasNext()){
-            E element = otherIt.next();
-            if(this.contains(element)){
-                intSet.add(element);
+    public ISet<E> intersection(ISet<E> otherSet) {
+
+        ISet<E> intSet = this.union(otherSet);
+        Iterator<E> unionIt = intSet.iterator();
+        while (unionIt.hasNext()) {
+            E element = unionIt.next();
+            // If the element is not present in either this set or otherSet, it should be
+            // removed from intSet.
+            if (!this.contains(element) || !otherSet.contains(element)) {
+                unionIt.remove();
             }
         }
+
         return intSet;
-        
     }
 }
