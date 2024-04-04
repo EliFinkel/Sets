@@ -30,8 +30,8 @@ import javax.swing.UIManager;
  * CS 314 Students, put your results to the experiments and answers to questions
  * here: CS314 Students, why is it unwise to implement all three of the
  * intersection, union, and difference methods in the AbstractSet class:
-//  TODO:
- * Name
+        It would be unwise because implementing a set that returns an ISet<E> means we need
+        to call one of the other two type ISet<E> methods in abstractSet. This is unefficient.
  * Sorted Set
         Name          Size      Total Words       Increase from Prev      Unique     Inc prev     Actual time      Inc prev row
         pg1.txt       124kb         23353               -                  4522         -            0.070609          -
@@ -58,7 +58,23 @@ import javax.swing.UIManager;
         pg2.txt       273kb         46088              22735               11708        7186         0.035450458       0.022055333
         pg3.txt       44kb          7423               -38665              2488         -9220        0.012791959      -0.022658499
         pg4.txt       285kb         50573              43150               9919         7431         0.037296542       0.024504583
- */
+
+        *Process Text Big O
+        Sorted -> O(N^2)
+        Unsorted -> O(N^2)
+        HashSet -> O(N)
+        TreeSet -> O(NLogN)
+
+        *Big O of Add Methods
+        Sorted -> O(N)
+        Unsorted -> O(N)
+        HashSet -> O(1)
+        TreeSet -> O(LogN)
+
+        *What are the differences between HashSet and TreeSet when printing out the contents of the Set?
+        A HashSet prints elements in no specific order, while a TreeSet prints elements in a sorted order. 
+
+*/
 
 public class SetTester {
 
