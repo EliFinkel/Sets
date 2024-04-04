@@ -140,7 +140,7 @@ public abstract class AbstractSet<E> implements ISet<E> {
             return false;
         }
         Iterator<?> otherIt = otherSet.iterator();
-        
+
         while (otherIt.hasNext()) {
             Object nextElement = otherIt.next();
             Iterator<E> setIt = iterator();
@@ -181,8 +181,6 @@ public abstract class AbstractSet<E> implements ISet<E> {
         return prevSize != size();
     }
 
-
-
     /**
      * Return a String version of this set.
      * Format is (e1, e2, ... en)
@@ -210,9 +208,7 @@ public abstract class AbstractSet<E> implements ISet<E> {
 
     @Override
     public ISet<E> intersection(ISet<E> otherSet){
-        ISet<E> intSet = otherSet;
-        otherSet.clear();
-
+        ISet<E> intSet = otherSet.union(otherSet);
         Iterator<E> otherIt = otherSet.iterator();
         while(otherIt.hasNext()){
             E element = otherIt.next();

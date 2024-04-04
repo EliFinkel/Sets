@@ -41,7 +41,7 @@ public class UnsortedSet<E> extends AbstractSet<E> {
             throw new IllegalArgumentException("Other set must not be null.");
         }
         myCon = new ArrayList<>();
-        Iterator<E> it = this.iterator();
+        Iterator<E> it = otherSet.iterator();
         while (it.hasNext()) {
             this.add(it.next());
         }
@@ -68,16 +68,15 @@ public class UnsortedSet<E> extends AbstractSet<E> {
         if (otherSet == null) {
             throw new IllegalArgumentException("other set may not be null.");
         }
-        ISet<E> result = new UnsortedSet<>(otherSet);
-        Iterator<E> it = this.iterator();
-        while(it.hasNext()) {
+        ISet<E> result = new UnsortedSet<>(this);
+        Iterator<E> it = otherSet.iterator();
+        while (it.hasNext()) {
             E element = it.next();
-            if(!otherSet.contains(element)) {
+            if (this.contains(element)) {
                 result.add(element);
             }
         }
         return result;
-        //logic needs to be checked
     }
 
     public ISet<E> difference(ISet<E> otherSet) {
