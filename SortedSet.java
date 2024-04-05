@@ -109,7 +109,7 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
      * @return The union of this set with the other set.
      */
     // O(Log N)
-    public int binarySearch(ArrayList<E> data, E target) {
+    private int binarySearch(ArrayList<E> data, E target) {
         if (data == null || target == null) {
             throw new IllegalArgumentException("Illegal Argument: " +
                                                 "Data nor Target can be null.");

@@ -16,14 +16,13 @@
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Scanner;
 import java.util.Set;
 import java.util.TreeSet;
 
 import javax.swing.JFileChooser;
+import javax.swing.UIManager;
 
 /*
  * CS 314 Students, put your results to the experiments and answers to questions
@@ -80,45 +79,194 @@ import javax.swing.JFileChooser;
 
 public class SetTester {
     public static void main(String[] args) {
-        ISet<String> s1 = new UnsortedSet<>();
-        s1.add("A");
-        s1.add("C");
-        s1.add("A");
-        s1.add("B");
-
+        ISet<Integer> setA = new UnsortedSet<>();
+        ISet<Integer> setB = new SortedSet<>();
+        abstractTests(setA, setB);
+        unsortedTests(setA, setB);
+        sortedTests(setA, setB);
         
-
-        // CS314 Students. Uncomment this section when ready to
-        // run your experiments
+        // // CS314 Students. Uncomment this section when ready to
+        // // run your experiments
         // try {
-        //         UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        //     UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         // } catch (Exception e) {
-        //         System.out.println("Unable to change look and feel");
+        //     System.out.println("Unable to change look and feel");
         // }
         // Scanner sc = new Scanner(System.in);
         // String response = "";
         // do {
-        //         largeTest();
-        //         System.out.print("Another file? Enter y to do another file: ");
-        //         response = sc.next();
-        // } while (response != null && response.length() > 0
-        //                 && response.substring(0, 1).equalsIgnoreCase("y"));
+        //     largeTest();
+        //     System.out.print("Another file? Enter y to do another file: ");
+        //     response = sc.next();
+        // }  while (response != null && response.length() > 0
+        //                         && response.substring(0, 1).equalsIgnoreCase("y"));
+
     }
 
-    // print out results of test
-    private static <E> void showTestResults(boolean actualResult, boolean expectedResult,
-        int testNumber, ISet<E> set1, ISet<E> set2, String testDescription) {
-        if (actualResult == expectedResult) {
-            System.out.println("Passed test " + testNumber);
+    private static void abstractTests(ISet<Integer> setA, ISet<Integer> setB) {
+        System.out.println("\nAbstract Tests:");
+        
+        // add all
+        setB.add(5);
+        setB.add(6);
+        setA.addAll(setB);
+        if (setA.size() == 2) {
+            System.out.println("PASSED add all");
         } else {
-            System.out.print("Failed test ");
-            System.out.println(testNumber + ": " + testDescription);
-            System.out.println("Expected result: " + expectedResult);
-            System.out.println("Actual result  : " + actualResult);
-            System.out.println("Set 1: " + set1);
-            if (set2 != null) {
-                System.out.println("Set 2: " + set2);
-            }
+            System.out.println("FAILED add all");
+        }
+
+        // contains
+        if (setA.contains(5)) {
+            System.out.println("PASSED contains");
+        } else {
+            System.out.println("FAILED contains");
+        }
+
+        // contains all
+        if (setA.containsAll(setB)) {
+            System.out.println("PASSED contains all");
+        } else {
+            System.out.println("FAILED contains all");
+        }
+
+        // equals
+        if (setA.equals(setB)) {
+            System.out.println("PASSED equals");
+        } else {
+            System.out.println("FAILED equals");
+        }
+
+        // remove
+        if (!setA.remove(9)) {
+            System.out.println("PASSED remove");
+        } else {
+            System.out.println("FAILED remove");
+        }
+
+        // to string
+        String testString = "(5, 6)";
+        if (setA.toString().equals(testString)) {
+            System.out.println("PASSED to string");
+        } else {
+            System.out.println("FAILED to string");
+        }
+
+        // intersection
+        if (setA.intersection(setB).toString().equals("(5, 6)")) {
+            System.out.println("PASSED intersection");
+        } else {
+            System.out.println("FAILED intersection");
+        }
+    }
+
+    private static void unsortedTests(ISet<Integer> setA, ISet<Integer> setB) {
+        System.out.println("\nUnsorted Tests:");
+        setA = new UnsortedSet<>();
+        setB = new UnsortedSet<>();
+
+        // add
+        if (setA.add(100)) {
+            System.out.println("PASSED add");
+        } else {
+            System.out.println("FAILED add");
+        }
+
+        // clear
+        setA.clear();
+        if (setA.size() == 0) {
+            System.out.println("PASSED clear");
+        } else {
+            System.out.println("FAILED clear");
+        }
+
+        // union
+        setA.add(1);
+        setA.add(2);
+        setA.add(3);
+        setB.add(3);
+        setB.add(4);
+        setB.add(5);
+        if (setA.union(setB).toString().equals("(1, 2, 3, 4, 5)")) {
+            System.out.println("PASSED union");
+        } else {
+            System.out.println("FAILED union" + setA.union(setB).toString());
+        }
+
+        // difference
+        setB.clear();
+        if (setA.difference(setB).toString().equals("(1, 2, 3)")) {
+            System.out.println("PASSED difference");
+        } else {
+            System.out.println("FAILED difference");
+        }
+
+        // size
+        if (setA.size() == 3) {
+            System.out.println("PASSED size");
+        } else {
+            System.out.println("FAILED size");
+        }
+    }
+
+    private static void sortedTests(ISet<Integer> setA, ISet<Integer> setB) {
+        System.out.println("\nSorted Tests:");
+        setA = new SortedSet<>();
+        setB = new SortedSet<>();
+
+        // min
+        setA.add(-5);
+        setA.add(5);
+        setA.add(50000);
+        if (((SortedSet<Integer>)setA).min() == -5) {
+            System.out.println("PASSED min");
+        } else {
+            System.out.println("FAILED min");
+        }
+        
+        // max
+        if (((SortedSet<Integer>)setA).max() == 50000) {
+            System.out.println("PASSED max");
+        } else {
+            System.out.println("FAILED max");
+        }
+
+        // add
+        setB.add(77);
+        setB.add(777);
+        if (setB.toString().equals("(77, 777)")) {
+            System.out.println("PASSED add");
+        } else {
+            System.out.println("FAILED add");
+        }
+
+        // difference
+        if (setA.difference(setB).toString().equals("(-5, 5, 50000)")) {
+            System.out.println("PASSED difference");
+        } else {
+            System.out.println("FAILED difference");
+        }
+
+        // size
+        if (setB.size() == 2) {
+            System.out.println("PASSED size");
+        } else {
+            System.out.println("FAILED size");
+        }
+
+        // clear
+        setA.clear();
+        if (setA.size() == 0) {
+            System.out.println("PASSED clear");
+        } else {
+            System.out.println("FAILED clear");
+        }
+
+        // union
+        if (setA.union(setB).toString().equals("(77, 777)")) {
+            System.out.println("PASSED union\n");
+        } else {
+            System.out.println("FAILED union\n");
         }
     }
 

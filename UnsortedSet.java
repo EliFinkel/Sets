@@ -98,6 +98,7 @@ public class UnsortedSet<E> extends AbstractSet<E> {
     // O(1)
     @Override
     public void clear() {
+
         myCon.clear();
     }
 
@@ -128,7 +129,7 @@ public class UnsortedSet<E> extends AbstractSet<E> {
         while (it.hasNext()) {
             // Add each element of other to the new set if not already present
             E element = it.next();
-            if (this.contains(element)) {
+            if (!this.contains(element)) {
                 result.add(element);
             }
         }
