@@ -1,19 +1,19 @@
 /*  Student information for assignment:
  *
- *  On <MY|OUR> honor, <NAME1> and <NAME2), 
- *  this programming assignment is <MY|OUR> own work
- *  and <I|WE> have not provided this code to any other student.
+ *  On our honor, Gabriel Aguilar and Eli Finkel, 
+ *  this programming assignment is our own work
+ *  and we have not provided this code to any other student.
  *
- *  Number of slip days used:
+ *  Number of slip days used: 0
  *
  *  Student 1 (Student whose Canvas account is being used)
- *  UTEID:
- *  email address:
- *  TA name:
+ *  UTEID: gaa2292
+ *  email address: gaa2292@utexas.edu
+ *  TA name: Gracelynn Ray
  *  
  *  Student 2 
- *  UTEID:
- *  email address:   
+ *  UTEID: egf525
+ *  email address: eligfinkel@utexas.edu
  */
 
 import java.util.Iterator;
@@ -58,10 +58,8 @@ public abstract class AbstractSet<E> implements ISet<E> {
         }
         int prevSize = size();
         Iterator<E> it = otherSet.iterator();
-
         // Iterate through other set
         while (it.hasNext()) {
-
             // Add all from otherSet
             add(it.next());
         }
@@ -113,7 +111,6 @@ public abstract class AbstractSet<E> implements ISet<E> {
         }
 
         Iterator<E> otherIt = otherSet.iterator();
-
         // Iterate through other set
         while (otherIt.hasNext()) {
             // If this set doesent contain an element of totherSet return false
@@ -136,21 +133,19 @@ public abstract class AbstractSet<E> implements ISet<E> {
      * @return true if other is a Set and has the same elements as this set
      */
     public boolean equals(Object other) {
-        if (this == other) {
-            return true;
-        }
-
         // Check if other implements ISet and cast if so
-        if (!(other instanceof ISet<?>)) {
+        if (other == null || !(other instanceof ISet<?>)) {
             return false;
         }
+
         ISet<?> otherSet = (ISet<?>) other;
         // Check size is equal
         if (this.size() != otherSet.size()) {
             return false;
         }
+
         Iterator<?> otherIt = otherSet.iterator();
-        // Iterate through otheSet
+        // Iterate through otherSet
         while (otherIt.hasNext()) {
             Object nextElement = otherIt.next();
             Iterator<E> setIt = iterator();
@@ -183,6 +178,7 @@ public abstract class AbstractSet<E> implements ISet<E> {
             throw new IllegalArgumentException("Illegal Argument: " +
                     "item cannot be null");
         }
+
         int prevSize = size();
         Iterator<E> setIt = iterator();
         // Iterate through this set
@@ -192,6 +188,7 @@ public abstract class AbstractSet<E> implements ISet<E> {
                 setIt.remove();
             }
         }
+
         return prevSize != size();
     }
 
@@ -220,16 +217,30 @@ public abstract class AbstractSet<E> implements ISet<E> {
         return result.toString();
     }
 
+    /**
+     * Create a new set that is the intersection of this set and otherSet.
+     * <br>
+     * pre: otherSet != null
+     * <br>
+     * post: returns a set that is the intersection of this set and otherSet.
+     * Neither this set or otherSet are altered as a result of this operation.
+     * <br>
+     * 
+     * @param otherSet != null
+     * @return a set that is the union of this set and otherSet
+     */
     @Override
+    // O(N^2)
     public ISet<E> intersection(ISet<E> otherSet) {
         if (otherSet == null) {
             throw new IllegalArgumentException("Illegal Argument: " +
                     "otherSet cannot be null!");
         }
+
         // Start with the union of this and otherSet
         ISet<E> intSet = this.union(otherSet);
-        Iterator<E> unionIt = intSet.iterator();
 
+        Iterator<E> unionIt = intSet.iterator();
         // Loop through unionSet
         while (unionIt.hasNext()) {
             E element = unionIt.next();

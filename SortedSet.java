@@ -1,19 +1,19 @@
 /*  Student information for assignment:
  *
- *  On <MY|OUR> honor, <NAME1> and <NAME2),
- *  this programming assignment is <MY|OUR> own work
- *  and <I|WE> have not provided this code to any other student.
+ *  On our honor, Gabriel Aguilar and Eli Finkel,
+ *  this programming assignment is our own work
+ *  and we have not provided this code to any other student.
  *
- *  Number of slip days used:
+ *  Number of slip days used: 0
  *
  *  Student 1 (Student whose Canvas account is being used)
- *  UTEID:
- *  email address:
- *  TA name:
+ *  UTEID: gaa2292
+ *  email address: gaa2292@utexas.edu
+ *  TA name: Gracelynn Ray
  *
  *  Student 2
- *  UTEID:
- *  email address:
+ *  UTEID: egf525
+ *  email address: eligfinkel@utexas.edu
  */
 
 import java.util.Iterator;
@@ -38,7 +38,7 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
     /**
      * create an empty SortedSet
      */
-
+    // O(1)
     public SortedSet() {
         myCon = new ArrayList<>();
     }
@@ -54,7 +54,8 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
             throw new IllegalArgumentException("Illegal Argument: " +
                     "other cannot be null");
         }
-        // Init myCon
+
+        // Init. myCon
         myCon = new ArrayList<>();
         Iterator<E> otherIt = other.iterator();
         // Loop through other
@@ -78,6 +79,7 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
             throw new IllegalArgumentException("Illegal Argument: " +
                     "size is 0");
         }
+
         // Return the first element in the sorted set
         return myCon.get(0);
     }
@@ -95,6 +97,7 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
             throw new IllegalArgumentException("Illegal Argument: " +
                     "size is 0");
         }
+
         // Return the last element in the sorted set
         return myCon.get(size() - 1);
     }
@@ -105,17 +108,19 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
      * @param otherSet The other set to compute the union with.
      * @return The union of this set with the other set.
      */
-
     // O(Log N)
     public int binarySearch(ArrayList<E> data, E target) {
+        if (data == null || target == null) {
+            throw new IllegalArgumentException("Illegal Argument: " +
+                                                "Data nor Target can be null.");
+        }
+
         int left = 0;
         int right = data.size() - 1;
-
         while (left <= right) {
             // Find the middle index and compare our target to the middle value
             int middle = left + (right - left) / 2;
             int compareResult = target.compareTo(data.get(middle));
-
             if (compareResult == 0) {
                 // Target found
                 return middle;
@@ -127,6 +132,7 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
                 left = middle + 1;
             }
         }
+
         // Return the correct insertion point for targer
         return left;
     }
@@ -151,15 +157,16 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
         // Find the point to insert item
         int insertionPoint = binarySearch(myCon, item);
 
-        // Check that item does not eist in the set
-        boolean isDuplicate = (insertionPoint < myCon.size() && item.equals(myCon.get(insertionPoint)));
-
+        // Check that item does not exist in the set
+        boolean isDuplicate = (insertionPoint < myCon.size() &&
+                                                item.equals(myCon.get(insertionPoint)));
         if (!isDuplicate) {
             // Add item if not a duplicate to this set and return true
             myCon.add(insertionPoint, item);
             return true;
         }
-        return true;
+
+        return false;
     }
 
     /**
@@ -188,7 +195,9 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
             throw new IllegalArgumentException("Illegal Argument: " +
                     "otherSet cannot be null");
         }
+
         ISet<E> diffSet = new SortedSet<>();
+
         Iterator<E> it = iterator();
         // Iterate through this set
         while (it.hasNext()) {
@@ -211,7 +220,6 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
     // O(1)
     @Override
     public Iterator<E> iterator() {
-        // Return an iterator of the internal ArrayList
         return myCon.iterator();
     }
 
@@ -224,7 +232,6 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
     // O(1)
     @Override
     public int size() {
-        // Return size of the interal ArrayList
         return myCon.size();
     }
 
@@ -249,8 +256,6 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
      * <br>
      * post: returns a set that is the union of this set and otherSet.
      * Neither this set or otherSet are altered as a result of this operation.
-     * <br>
-     * pre: otherSet != null
      * 
      * @param otherSet != null
      * @return a set that is the union of this set and otherSet
@@ -262,10 +267,12 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
             throw new IllegalArgumentException("Illegal Argument: " +
                     "otherSet cannot be null");
         }
-        // Create a new sorted set that is a copy of thi set
+
+        // Create a new sorted set that is a copy of this set
         ISet<E> unionSet = new SortedSet<>(this);
+
         Iterator<E> otherIt = otherSet.iterator();
-        // Iterate through otherSt
+        // Iterate through otherSet
         while (otherIt.hasNext()) {
             // Add each element of other to the unionSet if not already present
             E element = otherIt.next();
@@ -273,6 +280,7 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
                 unionSet.add(element);
             }
         }
+
         return unionSet;
     }
 
